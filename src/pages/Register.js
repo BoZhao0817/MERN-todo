@@ -1,19 +1,16 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { useHistory } from "react-router-dom";
+import {CredentialsContext} from "../App";
+import {handleErrors} from "./Login"
 
 export default function Register() {
 
-    const handleErrors = async (response) => {
-        if (!response.ok) {
-            const { message } = await response.json();
-            throw Error(message);
-        }
-        return response.json();
-    };
     // bring a hook to communicate with the backend
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [, setCredentials] = useContext(CredentialsContext);
+
 
     // function to use the upper variables to make HTTP requests in backend
     const register= (e) => {
@@ -30,9 +27,13 @@ export default function Register() {
         })
             .then(handleErrors)
             .then(() => {
-                // jump to the home page
+                setCredentials({
+                    username,
+                    password,
+                });
+                // jump to the login page (url)
                 // https://reactrouter.com/web/api/Hooks/usehistory
-                history.push("/");
+                history.push("/login");
             })
             .catch((error) => {
                 setError(error.message);

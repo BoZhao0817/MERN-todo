@@ -5,14 +5,11 @@ import Login from "./pages/Login";
 import Welcome from "./pages/Welcome";
 import React, { useState } from "react";
 
-export const CredentialsContext = React.createContext(null);
+export const CredentialsContext = React.createContext();
 
 function App() {
     // useState to save the credential value
-    const credentialsState = useState({
-        username:"asdf",
-        password:"1234",
-    });
+    const credentialsState = useState(null);
 
       return (
         <div className="App">
